@@ -31,20 +31,21 @@ mutual-fund-explorer/
 │
 ├── app.py                      # Main Flask app, API routes & frontend rendering
 ├── templates/
-│     ├── index.html
-│     ├── schemes.html
-│     └── scheme_details.html
+│   ├── index.html
+│   ├── schemes.html
+│   └── scheme_details.html
 ├── static/
-│     ├── styles.css            # App styling (colorful, modern, animated)
-│     └── script.js             # App interactivity, chart rendering & page logic
+│   ├── styles.css              # App styling (colorful, modern, animated)
+│   └── script.js               # App interactivity, chart rendering & page logic
 │
-├── load_data.py                # Loads scheme master data into MySQL
+├── load_data.py                # Loads static scheme master data into MySQL
 ├── load_nifty50.py             # Loads Nifty50 historical data into MySQL
 ├── backfill_historical.py      # Fetches historic NAV data per scheme via MFAPI
 ├── data_updater.py             # Scheduled daily NAV, auto-update (from AMFI)
-├── calculate_metrics.py        # Calculates advanced scheme risk & return metrics
+├── calculate_metrics.py        # Calculates advanced metrics for each scheme
+│
 ├── cleaned_dataset.csv         # Mutual fund scheme master (basic snapshot)
-├── Nifty-50-Historical-Data.csv# Historic Nifty 50 price data
+├── Nifty-50-Historical-Data.csv # Historic Nifty 50 price data
 
 ## 💾 Database Schema
 Uses MySQL with three main tables:
