@@ -16,15 +16,15 @@ Mutual Fund Explorer is an interactive web application built to help investors a
 6. All metrics, data loaders, and visualizations are automated and updated regularly
 
 ## 🏗️ Features
-Clean, responsive UI built with Bootstrap-like CSS and custom JavaScript
+1. Clean, responsive UI built with Bootstrap-like CSS and custom JavaScript
 
-Fast search/filter for AMCs or scheme names
+2. Fast search/filter for AMCs or scheme names
 
-Charts for NAV & benchmark comparison (via Chart.js)
+3. Charts for NAV & benchmark comparison (via Chart.js)
 
-In-depth risk metrics (Alpha, Beta, etc.), calculated using pandas/numpy on stored historical NAV & Nifty50 prices
+4. In-depth risk metrics (Alpha, Beta, etc.), calculated using pandas/numpy on stored historical NAV & Nifty50 prices
 
-Easy Data Freshness Tracking for users & admins
+5. Easy Data Freshness Tracking for users & admins
 
 ## 🗂️ Project Structure
 mutual-fund-explorer/
@@ -50,101 +50,100 @@ mutual-fund-explorer/
 ## 💾 Database Schema
 Uses MySQL with three main tables:
 
-mutual_funds: Holds latest NAV, ISINs, names, AMC, etc.
+1. mutual_funds: Holds latest NAV, ISINs, names, AMC, etc.
 
-historical_nav: Daily historic NAVs for all tracked schemes
+2. historical_nav: Daily historic NAVs for all tracked schemes
 
-nifty50_data: Nifty50 historical OHLCV prices
+3. nifty50_data: Nifty50 historical OHLCV prices
 
-scheme_metrics: Precomputed risk/return stats (alpha, beta, sharpe, etc.)
+4. scheme_metrics: Precomputed risk/return stats (alpha, beta, sharpe, etc.)
 
-You will need to create these tables before running the app (see below).
+5. You will need to create these tables before running the app (see below).
 
 ## ⚙️ Data Sources
-AMFI (India) — latest NAVs
+1. AMFI (India) — latest NAVs
 
-MFAPI — for historical NAVs
+2. MFAPI — for historical NAVs
 
-Nifty 50 CSV — manual or sourced from investing.com or NSE
+3. Nifty 50 CSV — manual or sourced from investing.com or NSE
 
 ## 🛠️ Setup Guide
 Prerequisites
-Python 3.8+
+1. Python 3.8+
 
-MySQL server running locally
+2. MySQL server running locally
 
-pip install the following:
-Flask mysql-connector-python pandas numpy APScheduler requests chart.js
-(see requirements.txt)
+3. pip install the following:
+    Flask mysql-connector-python pandas numpy APScheduler requests chart.js
 
 Steps
-Clone this repository
+1. Clone this repository
 
-Provision MySQL database
+2. Provision MySQL database
 
-sql
-CREATE DATABASE mf_database;
-# Create required tables as per your code (see .py scripts)
-Load scheme master and Nifty50 data
+    sql
+    CREATE DATABASE mf_database;
+3. Load scheme master and Nifty50 data
 
-bash
-python load_data.py
-python load_nifty50.py
-Backfill historical NAVs (via MFAPI.in, automated sleep between calls)
+    bash
+    python load_data.py
+    python load_nifty50.py
+4. Backfill historical NAVs (via MFAPI.in, automated sleep between calls)
 
-bash
-python backfill_historical.py
-Calculate metrics
+    bash
+    python backfill_historical.py
+5. Calculate metrics
 
-bash
-python calculate_metrics.py
-(Optional) Run daily updater to keep NAVs refreshed
+    bash
+    python calculate_metrics.py
+6. (Optional) Run daily updater to keep NAVs refreshed
 
-The apscheduler job in app.py and data_updater.py does this on a scheduled basis
+    The apscheduler job in app.py and data_updater.py does this on a scheduled basis
 
-Run the Flask app
+7. Run the Flask app
 
-bash
-python app.py
-Open the browser:
-Go to http://localhost:5000
+    bash
+    python app.py
+8. Open the browser:
+    Go to http://localhost:5000
 
 ## ✨ Usage
-Start at the homepage:
+1. Start at the homepage:
 
-Choose AMC → View schemes
+    Choose AMC → View schemes
+    
+    Select a fund to view full details
 
-Select a fund to view full details
+2. Fund details show: ISIN codes, Scheme code, NAV snapshots, NAV chart, performance vs. Nifty50, risk metrics, and a suggested action (Buy/Sell/Hold)
 
-Fund details show: ISIN codes, Scheme code, NAV snapshots, NAV chart, performance vs. Nifty50, risk metrics, and a suggested action (Buy/Sell/Hold)
-
-Risk metrics legend is provided for interpretation
+3/ Risk metrics legend is provided for interpretation
 
 ## 📁 Customization & Extending
-Add/modify schemes: Use cleaned_dataset.csv and reload
+1. Add/modify schemes: Use cleaned_dataset.csv and reload
 
-Add new benchmarks: Adapt code to include new index CSVs & DB tables
+2. Add new benchmarks: Adapt code to include new index CSVs & DB tables
 
-Performance Metrics: Tune your risk-free rate, comparison window, etc. in calculate_metrics.py
+3. Performance Metrics: Tune your risk-free rate, comparison window, etc. in calculate_metrics.py
 
-Improve UI: static/styles.css and static/script.js are fully flexible
+4. Improve UI: static/styles.css and static/script.js are fully flexible
 
-Production: Remove debug, consider deploying with gunicorn/uwsgi, and secure database credentials!
+5. Production: Remove debug, consider deploying with gunicorn/uwsgi, and secure database credentials!
 
 ## 🧑💻 Contributing
 PRs are welcome! Please open issues for bugs/suggested features.
 To contribute, fork this repo, make improvements, and send a pull request.
 
 ## 📢 Credits & License
-Mutual fund data sourced from AMFI and MFAPI.
+1. Mutual fund data sourced from AMFI and MFAPI.
 
-Nifty 50 data is from official NSE sources or public CSVs (such as Investing.com or similar).
+2. Nifty 50 data is from official NSE sources or public CSVs (such as Investing.com or similar).
 
-Built using Flask, pandas, Chart.js, and MySQL.
+3. Built using Flask, pandas, Chart.js, and MySQL.
 
-This project is provided under an open license for educational purposes and personal use only.
-It is not intended for commercial distribution.
+4. This project is provided under an open license for educational purposes and personal use only.
+   
+5. It is not intended for commercial distribution.
 
-If you use or extend this project, please credit the above data sources.
+6. If you use or extend this project, please credit the above data sources.
 
 You can simply copy and replace the old Credits & License section in your README with this one, or merge it as needed.
