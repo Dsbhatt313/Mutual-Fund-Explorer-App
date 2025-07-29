@@ -44,7 +44,7 @@ Mutual Fund Explorer is an interactive web application built to help investors a
 - `Nifty-50-Historical-Data.csv` - Historic Nifty 50 price data
 
 ## 💾 Database Schema
-Uses MySQL with three main tables:
+**Uses MySQL with three main tables:**
 
 1. mutual_funds: Holds latest NAV, ISINs, names, AMC, etc.
 
