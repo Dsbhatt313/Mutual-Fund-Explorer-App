@@ -68,7 +68,7 @@ Uses MySQL with three main tables:
 3. Nifty 50 CSV — manual or sourced from investing.com or NSE
 
 ## 🛠️ Setup Guide
-Prerequisites
+### Prerequisites
 1. Python 3.8+
 
 2. MySQL server running locally
@@ -76,7 +76,7 @@ Prerequisites
 3. pip install the following:
     Flask mysql-connector-python pandas numpy APScheduler requests chart.js
 
-Steps
+### Steps
 1. Clone this repository
 
 2. Provision MySQL database
@@ -116,7 +116,7 @@ Steps
 
 2. Fund details show: ISIN codes, Scheme code, NAV snapshots, NAV chart, performance vs. Nifty50, risk metrics, and a suggested action (Buy/Sell/Hold)
 
-3/ Risk metrics legend is provided for interpretation
+3. Risk metrics legend is provided for interpretation
 
 ## 📁 Customization & Extending
 1. Add/modify schemes: Use cleaned_dataset.csv and reload
