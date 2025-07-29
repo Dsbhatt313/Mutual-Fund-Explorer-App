@@ -27,6 +27,7 @@ Mutual Fund Explorer is an interactive web application built to help investors a
 5. Easy Data Freshness Tracking for users & admins
 
 ## 🗂️ Project Structure
+'''
 mutual-fund-explorer/
 │
 ├── app.py                # Main Flask app, API routes & frontend rendering
@@ -46,6 +47,7 @@ mutual-fund-explorer/
 │
 ├── cleaned_dataset.csv   # Mutual fund scheme master (basic snapshot)
 ├── Nifty-50-Historical-Data.csv # Historic Nifty 50 price data
+'''
 
 ## 💾 Database Schema
 Uses MySQL with three main tables:
