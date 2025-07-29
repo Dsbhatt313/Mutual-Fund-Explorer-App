@@ -3,17 +3,17 @@
 ## 🚀 Project Overview
 Mutual Fund Explorer is an interactive web application built to help investors and analysts discover and research Indian mutual funds. The app lets users:
 
-Search AMC and mutual fund schemes across categories (debt/short-term/dynamic/etc.)
+1. Search AMC and mutual fund schemes across categories (debt/short-term/dynamic/etc.)
 
-View real-time and historical NAV data (fetched and stored from AMFI / MFAPI)
+2. View real-time and historical NAV data (fetched and stored from AMFI / MFAPI)
 
-Plot NAV movement and compare it side by side with Nifty 50 benchmark
+3. Plot NAV movement and compare it side by side with Nifty 50 benchmark
 
-View detailed risk/performance metrics: Alpha, Beta, Sharpe, Sortino, Std. Deviation
+4. View detailed risk/performance metrics: Alpha, Beta, Sharpe, Sortino, Std. Deviation
 
-Get a suggested action ("Buy/Hold/Sell") based on returns vs. benchmark
+5. Get a suggested action ("Buy/Hold/Sell") based on returns vs. benchmark
 
-All metrics, data loaders, and visualizations are automated and updated regularly
+6. All metrics, data loaders, and visualizations are automated and updated regularly
 
 ## 🏗️ Features
 Clean, responsive UI built with Bootstrap-like CSS and custom JavaScript
@@ -27,7 +27,6 @@ In-depth risk metrics (Alpha, Beta, etc.), calculated using pandas/numpy on stor
 Easy Data Freshness Tracking for users & admins
 
 ## 🗂️ Project Structure
-text
 mutual-fund-explorer/
 │
 ├── app.py                # Main Flask app, API routes & frontend rendering
@@ -47,10 +46,8 @@ mutual-fund-explorer/
 │
 ├── cleaned_dataset.csv   # Mutual fund scheme master (basic snapshot)
 ├── Nifty-50-Historical-Data.csv # Historic Nifty 50 price data
-│
-├── requirements.txt      # (recommend to add) All dependencies
-├── README.md             # This file!
-💾 Database Schema
+
+## 💾 Database Schema
 Uses MySQL with three main tables:
 
 mutual_funds: Holds latest NAV, ISINs, names, AMC, etc.
