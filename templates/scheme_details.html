@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ details.scheme_name }} Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container" id="scheme-details" data-scheme-code="{{ details.scheme_code }}">
+        <h1><i class="fas fa-info-circle"></i> Scheme Details</h1>
+
+        <div class="data-freshness">
+            <i class="fas fa-clock"></i> Data as of: <strong>{{ details.last_updated }}</strong>
+        </div>
+
+        <div class="back-button">
+            <button onclick="window.location.href='/schemes/{{ details.amc_name|urlencode }}'">
+                <i class="fas fa-arrow-left"></i> Back to Schemes
+            </button>
+        </div>
+
+        <div class="details-section">
+            <div class="detail-header">
+                <h2>{{ details.scheme_name }}</h2>
+                <span class="amc-badge">{{ details.amc_name }}</span>
+            </div>
+            
+            <div class="detail-row">
+                <span class="detail-label"><i class="fas fa-barcode"></i> Scheme Code</span>
+                <span class="detail-value">{{ details.scheme_code }}</span>
+            </div>
+            
+            <div class="detail-row">
+                <span class="detail-label"><i class="fas fa-id-card"></i> ISIN Growth</span>
+                <span class="detail-value">{{ details.isin_growth or 'N/A' }}</span>
+            </div>
+            
+            <div class="detail-row">
+                <span class="detail-label"><i class="fas fa-id-card"></i> ISIN Div Reinvestment</span>
+                <span class="detail-value">{{ details.isin_div_reinvestment or 'N/A' }}</span>
+            </div>
+            
+            <div class="detail-row">
+                <span class="detail-label"><i class="fas fa-rupee-sign"></i> Current NAV</span>
+                <span class="detail-value">₹{{ "%.4f"|format(details.net_asset_value|float) }}</span>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h3><i class="fas fa-chart-line"></i> NAV Performance (Last 30 Days)</h3>
+            <canvas id="navChart"></canvas>
+        </div>
+
+        <div class="performance-metrics">
+            <h3><i class="fas fa-chart-bar"></i> Performance Comparison with Nifty 50</h3>
+            <div class="metrics-grid">
+                <div class="metric-card" id="schemeReturn">
+                    <h4>Scheme Return</h4>
+                    <div class="metric-value">--</div>
+                </div>
+                <div class="metric-card" id="niftyReturn">
+                    <h4>Nifty 50 Return</h4>
+                    <div class="metric-value">--</div>
+                </div>
+                <div class="metric-card" id="outperformance">
+                    <h4>Outperformance</h4>
+                    <div class="metric-value">--</div>
+                </div>
+
+                <div class="metric-card" id="action-buttons">
+                    <h4><i class="fas fa-hand-holding-usd"></i> Suggested Action</h4>
+                    <div class="action-buttons-container">
+                        <button class="action-btn buy-btn" id="buy-btn">
+                            <i class="fas fa-shopping-cart"></i> Buy
+                        </button>
+                        <button class="action-btn sell-btn" id="sell-btn">
+                            <i class="fas fa-money-bill-wave"></i> Sell
+                        </button>
+                        <button class="action-btn hold-btn" id="hold-btn">
+                            <i class="fas fa-pause-circle"></i> Hold
+                        </button>
+                    </div>
+                    <div class="metric-description">
+                        Based on performance vs Nifty 50
+                    </div>
+            </div>
+
+            </div>
+        </div>
+
+        <div class="risk-metrics">
+            <h3><i class="fas fa-chart-pie"></i> Risk Metrics</h3>
+            
+            {% if metrics %}
+            <div class="metrics-grid">
+                <div class="metric-card metric-alpha">
+                    <h4><i class="fas fa-chart-line"></i> Alpha</h4>
+                    <div class="metric-value {% if metrics.alpha and metrics.alpha >= 0 %}positive{% else %}negative{% endif %}">
+                        {{ metrics.alpha | round(2) if metrics.alpha is not none else 'N/A' }}
+                    </div>
+                    <div class="metric-description">
+                        Measures excess return compared to benchmark. Positive alpha indicates outperformance.
+                    </div>
+                </div>
+                
+                <div class="metric-card metric-beta">
+                    <h4><i class="fas fa-balance-scale"></i> Beta</h4>
+                    <div class="metric-value">
+                        {{ metrics.beta | round(2) if metrics.beta is not none else 'N/A' }}
+                    </div>
+                    <div class="metric-description">
+                        Measures volatility relative to market. Beta >1 means more volatile than market.
+                    </div>
+                </div>
+                
+                <div class="metric-card metric-sharpe">
+                    <h4><i class="fas fa-bolt"></i> Sharpe Ratio</h4>
+                    <div class="metric-value {% if metrics.sharpe_ratio and metrics.sharpe_ratio >= 0 %}positive{% else %}negative{% endif %}">
+                        {{ metrics.sharpe_ratio | round(2) if metrics.sharpe_ratio is not none else 'N/A' }}
+                    </div>
+                    <div class="metric-description">
+                        Risk-adjusted return. Higher values indicate better risk-adjusted performance.
+                    </div>
+                </div>
+                
+                <div class="metric-card metric-sortino">
+                    <h4><i class="fas fa-shield-alt"></i> Sortino Ratio</h4>
+                    <div class="metric-value {% if metrics.sortino_ratio and metrics.sortino_ratio >= 0 %}positive{% else %}negative{% endif %}">
+                        {{ metrics.sortino_ratio | round(2) if metrics.sortino_ratio is not none else 'N/A' }}
+                    </div>
+                    <div class="metric-description">
+                        Like Sharpe ratio but focuses only on downside risk. Higher is better.
+                    </div>
+                </div>
+                
+                <div class="metric-card metric-stddev">
+                    <h4><i class="fas fa-wave-square"></i> Standard Deviation</h4>
+                    <div class="metric-value">
+                        {{ metrics.std_dev | round(2) if metrics.std_dev is not none else 'N/A' }}
+                    </div>
+                    <div class="metric-description">
+                        Measures volatility. Higher values indicate more price fluctuation.
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="chart-error">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>No metrics available for this scheme</p>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
